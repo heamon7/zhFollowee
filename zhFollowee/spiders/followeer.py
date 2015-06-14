@@ -32,6 +32,7 @@ class FolloweerSpider(scrapy.Spider):
         'http://www.zhihu.com/',
     )
     followeeCountList =[967]
+    handle_httpstatus_list = [401,429,500]
     reqLimit =20
 
     def __init__(self):
@@ -74,6 +75,7 @@ class FolloweerSpider(scrapy.Spider):
                 reqUrl = self.urls[0]
 
                 reqTimes = (int(followeeCount)+self.reqLimit-1)/self.reqLimit
+                print "reqTimes %s" %str(reqTimes)
                 for index in reversed(range(reqTimes)):
                     print "request index: %s"  %str(index)
                     yield FormRequest(url =reqUrl,
@@ -90,36 +92,40 @@ class FolloweerSpider(scrapy.Spider):
 
     def parsePage(self,response):
 
+        if response.status != 200:
+            # print "ParsePage HTTPStatusCode: %s Retrying !" %str(response.status)
+            yield Request(response.url,callback=self.parsePage)
+        else:
 
-        item =  ZhfolloweeItem()
+            item =  ZhfolloweeItem()
 
-    #         if response.status != 200:
-    # #            print "ParsePage HTTPStatusCode: %s Retrying !" %str(response.status)
-    #             yield  self.make_requests_from_url(response.url)
-    #
-    #         else:
+        #         if response.status != 200:
+        # #            print "ParsePage HTTPStatusCode: %s Retrying !" %str(response.status)
+        #             yield  self.make_requests_from_url(response.url)
+        #
+        #         else:
 
-           # inspect_response(response,self)
-        data = json.loads(response.body)
-        userCountRet = len(data['msg'])
-        print "userCountRet: %s" %userCountRet
-        selData =''
-        if userCountRet:
-            for element in data['msg']:
-                selData= selData + element
+               # inspect_response(response,self)
+            data = json.loads(response.body)
+            userCountRet = len(data['msg'])
+            print "userCountRet: %s" %userCountRet
+            selData =''
+            if userCountRet:
+                for element in data['msg']:
+                    selData= selData + element
 
-            sel = Selector(text = selData)
+                sel = Selector(text = selData)
 
-            #item['offset'] = response.meta['offset']
-            item['followerLinkId'] = 'sublate'
-            item['followerDataId'] = "7e6bee8b4c8c826d76230cd6c139fa27"
-            item['followeeDataIdList'] = sel.xpath('//button/@data-id').extract()
-            item['followeeLinkList'] = sel.xpath('//a[@class="zm-item-link-avatar"]/@href').extract()
-            item['followeeImgUrlList'] = sel.xpath('//a[@class="zm-item-link-avatar"]/img/@src').extract()
-            item['followeeNameList'] = sel.xpath('//h2/a/text()').extract()
-            item['followeeFollowersList'] = sel.xpath('//div[@class="details zg-gray"]/a[1]//text()').extract()
-            item['followeeAskList'] = sel.xpath('//div[@class="details zg-gray"]/a[2]//text()').extract()
-            item['followeeAnswerList'] = sel.xpath('//div[@class="details zg-gray"]/a[3]//text()').extract()
-            item['followeeUpList'] = sel.xpath('//div[@class="details zg-gray"]/a[4]//text()').extract()
+                #item['offset'] = response.meta['offset']
+                item['followerLinkId'] = 'sublate'
+                item['followerDataId'] = "7e6bee8b4c8c826d76230cd6c139fa27"
+                item['followeeDataIdList'] = sel.xpath('//button/@data-id').extract()
+                item['followeeLinkList'] = sel.xpath('//a[@class="zm-item-link-avatar"]/@href').extract()
+                item['followeeImgUrlList'] = sel.xpath('//a[@class="zm-item-link-avatar"]/img/@src').extract()
+                item['followeeNameList'] = sel.xpath('//h2/a/text()').extract()
+                item['followeeFollowersList'] = sel.xpath('//div[@class="details zg-gray"]/a[1]//text()').extract()
+                item['followeeAskList'] = sel.xpath('//div[@class="details zg-gray"]/a[2]//text()').extract()
+                item['followeeAnswerList'] = sel.xpath('//div[@class="details zg-gray"]/a[3]//text()').extract()
+                item['followeeUpList'] = sel.xpath('//div[@class="details zg-gray"]/a[4]//text()').extract()
 
         yield item

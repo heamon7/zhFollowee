@@ -49,3 +49,9 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36
 
 APP_ID = '5uvre75z5nydbfsf87mbezlvc3i9103iluvwnepcva59fc22'
 MASTER_KEY = 'mq1xdyg72xjet9kln9zzbtorbgf52mc2mxls244cpbd6ujny'
+
+SPIDER_MIDDDLEWARES = {
+    'scrapy.contrib.spidermiddleware.httperror.HttpErrorMiddleware':300,
+}
+
+DUPEFILTER_CLASS = 'zhFollowee.custom_filters.SeenURLFilter'
