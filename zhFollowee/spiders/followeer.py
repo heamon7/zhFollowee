@@ -68,7 +68,7 @@ class FolloweerSpider(scrapy.Spider):
         #self.urls = ['http://www.zhihu.com/question/28626263','http://www.zhihu.com/question/22921426','http://www.zhihu.com/question/20123112']
         for index0 ,followeeCount in enumerate(self.followeeCountList):
             if followeeCount:
-                inspect_response(self,response)
+                inspect_response(response,self)
                 xsrfValue = response.xpath('/html/body/input[@name= "_xsrf"]/@value').extract()[0]
 
                 reqUrl = self.urls[0]
