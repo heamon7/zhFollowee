@@ -103,10 +103,12 @@ class FolloweerSpider(scrapy.Spider):
         data = json.loads(response.body)
         userCountRet = len(data['msg'])
         print "userCountRet: %s" %userCountRet
+        selData =''
         if userCountRet:
+            for element in data['msg']:
+                selData= selData + element
 
-
-            sel = Selector(text = data['msg'])
+            sel = Selector(text = selData)
 
             #item['offset'] = response.meta['offset']
             item['followerLinkId'] = re.split('http://www.zhihu.com/people/(\w*)/followees',response.url)[1]
