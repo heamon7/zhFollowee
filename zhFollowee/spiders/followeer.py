@@ -111,7 +111,7 @@ class FolloweerSpider(scrapy.Spider):
             sel = Selector(text = selData)
 
             #item['offset'] = response.meta['offset']
-            item['followerLinkId'] = re.split('http://www.zhihu.com/people/(\w*)/followees',response.url)[1]
+            item['followerLinkId'] = 'sublate'
             item['followerDataId'] = "7e6bee8b4c8c826d76230cd6c139fa27"
             item['followeeDataIdList'] = sel.xpath('//button/@data-id').extract()
             item['followeeLinkList'] = sel.xpath('//a[@class="zm-item-link-avatar"]/@href').extract()
