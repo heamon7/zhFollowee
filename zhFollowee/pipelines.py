@@ -48,7 +48,8 @@ class ZhfolloweePipeline(object):
 
                 questionFollowee = QuestionFollowee()
                 query = Query(QuestionFollowee)
-                if query.equal_to('followeeDataId',item['followeeDataIdList'][index]):
+                # if query.equal_to('followeeDataId',item['followeeDataIdList'][index]):
+                if 0:
                     pass
                 else:
                     questionFollowee.set('followerDataId',item['followerDataId'])

@@ -93,7 +93,7 @@ class FolloweerSpider(scrapy.Spider):
     def parsePage(self,response):
 
         if response.status != 200:
-            # print "ParsePage HTTPStatusCode: %s Retrying !" %str(response.status)
+            print "ParsePage HTTPStatusCode: %s Retrying !" %str(response.status)
             yield Request(response.url,callback=self.parsePage)
         else:
 
