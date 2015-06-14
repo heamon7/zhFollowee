@@ -128,4 +128,4 @@ class FolloweerSpider(scrapy.Spider):
                 item['followeeAnswerList'] = sel.xpath('//div[@class="details zg-gray"]/a[3]//text()').extract()
                 item['followeeUpList'] = sel.xpath('//div[@class="details zg-gray"]/a[4]//text()').extract()
 
-        yield item
+            yield item
