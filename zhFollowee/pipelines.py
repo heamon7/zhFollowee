@@ -47,7 +47,7 @@ class ZhfolloweePipeline(object):
             for index ,value in enumerate(item['followeeDataIdList']):
 
                 questionFollowee = QuestionFollowee()
-                if questionFollowee.exists('followeeDataId',item['followeeDataIdList'][index]):
+                if questionFollowee.get('followeeDataId',item['followeeDataIdList'][index]):
                     pass
                 else:
                     questionFollowee.set('followerDataId',item['followerDataId'])
