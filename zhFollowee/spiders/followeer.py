@@ -9,7 +9,6 @@ from scrapy.selector import Selector
 from scrapy import log
 from scrapy.shell import inspect_response
 
-import bmemcached
 
 import leancloud
 

@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'zhFollowee.spiders'
 #USER_AGENT = 'zhFollowee (+http://www.yourdomain.com)'
 LOG_LEVEL = 'ERROR'
 ITEM_PIPELINES = {
-    'zhLogin.pipelines.LoginPipeline': 300,
+    'zhFollowee.pipelines.ZhfolloweePipeline': 300,
    # 'zhihut.pipelines.SecondPipline': 800,
 }
 
