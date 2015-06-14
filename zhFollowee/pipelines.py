@@ -12,7 +12,7 @@ from leancloud import LeanCloudError
 from leancloud import Query
 from scrapy import log
 from scrapy.exceptions import DropItem
-from zhQuesFollower import settings
+from zhFollowee import settings
 import re
 
 import redis

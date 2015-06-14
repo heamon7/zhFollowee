@@ -66,7 +66,7 @@ class FolloweerSpider(scrapy.Spider):
         #inspect_response(response,self)
         #inspect_response(response,self)
         #self.urls = ['http://www.zhihu.com/question/28626263','http://www.zhihu.com/question/22921426','http://www.zhihu.com/question/20123112']
-        for index ,followeeCount in enumerate(self.followeeCountList):
+        for index0 ,followeeCount in enumerate(self.followeeCountList):
             if followeeCount:
                 xsrfValue = response.xpath('/html/body/input[@name= "_xsrf"]/@value').extract()[0]
 
@@ -87,7 +87,7 @@ class FolloweerSpider(scrapy.Spider):
                                               callback = self.parsePage
                                               )
 
-    def parse(self,response):
+    def parsePage(self,response):
 
 
         item =  ZhfolloweeItem()
@@ -101,7 +101,7 @@ class FolloweerSpider(scrapy.Spider):
            # inspect_response(response,self)
         data = json.loads(response.body)
         userCountRet = len(data['msg'])
-        # print "userCountRet: %s" %userCountRet
+        print "userCountRet: %s" %userCountRet
         if userCountRet:
 
 
