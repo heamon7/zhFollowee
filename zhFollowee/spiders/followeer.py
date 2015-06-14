@@ -80,6 +80,7 @@ class FolloweerSpider(scrapy.Spider):
                     print "request index: %s"  %str(index)
                     yield FormRequest(url =reqUrl,
                                               #headers = self.headers,
+                                              meta={'offset':index*self.reqLimit,'xsrfValue':xsrfValue},
                                               formdata={
                                                   'method':'next',
                                                   'params':'{"offset":'+ str(index*self.reqLimit)+',"order_by":"created","hash_id":"7e6bee8b4c8c826d76230cd6c139fa27"}',
@@ -94,9 +95,19 @@ class FolloweerSpider(scrapy.Spider):
 
         if response.status != 200:
             print "ParsePage HTTPStatusCode: %s Retrying !" %str(response.status)
-            yield Request(response.url,callback=self.parsePage)
-        else:
+            yield FormRequest(url =response.request.url,
+                                              #headers = self.headers,
+                                              meta={'offset':response.meta['offset'],'xsrfValue':response.meta['xsrfValue']},
+                                              formdata={
+                                                  'method':'next',
+                                                  'params':'{"offset":'+ str(response.meta['offset'])+',"order_by":"created","hash_id":"7e6bee8b4c8c826d76230cd6c139fa27"}',
+                                                  '_xsrf':response.meta['xsrfValue'],
 
+                                              },
+                                              dont_filter = True,
+                                              callback = self.parsePage
+                                              )
+        else:
             item =  ZhfolloweeItem()
 
         #         if response.status != 200:
