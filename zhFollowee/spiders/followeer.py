@@ -59,7 +59,7 @@ class FolloweerSpider(scrapy.Spider):
 
     def after_login(self,response):
         #print "after_login ing ....."
-        self.urls = ['http://www.zhihu.com/people/sublate/followees']
+        self.urls = ['http://www.zhihu.com/node/ProfileFolloweesListV2']
 
 
         print "after_login ing ....."
@@ -74,7 +74,7 @@ class FolloweerSpider(scrapy.Spider):
 
                 reqTimes = (int(followeeCount)+self.reqLimit-1)/self.reqLimit
                 for index in reversed(range(reqTimes)):
-                    # print "request index: %s"  %str(index)
+                    print "request index: %s"  %str(index)
                     yield FormRequest(url =reqUrl,
                                               #headers = self.headers,
                                               formdata={
