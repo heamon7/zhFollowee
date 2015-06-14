@@ -48,8 +48,8 @@ class FolloweerSpider(scrapy.Spider):
                                           #headers = self.headers,
                                           formdata={
                                               '_xsrf':xsrfvalue,
-                                              'email':'958790455@qq.com',
-                                              'password':'heamon7@()',
+                                              'email':'heamon8@163.com',
+                                              'password':'heamon8@()',
                                               'rememberme': 'y'
                                           },
                                           dont_filter = True,
