@@ -105,7 +105,7 @@ class FolloweerSpider(scrapy.Spider):
         if userCountRet:
 
 
-            sel = Selector(text = data)
+            sel = Selector(text = data['msg'])
 
             #item['offset'] = response.meta['offset']
             item['followerLinkId'] = re.split('http://www.zhihu.com/people/(\w*)/followees',response.url)[1]
